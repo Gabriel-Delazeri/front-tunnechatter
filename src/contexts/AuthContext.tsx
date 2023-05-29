@@ -33,7 +33,11 @@ export function AuthProvider({ children }) {
         const { 'tunechatter.token': token } = parseCookies()
 
         if (token) {
-            recoverUserInformation().then(response => setUser(response.user))
+            const user = recoverUserInformation(token).then(
+                (response) =>  {
+                    setUser(response.user)
+                }
+            )
         }
     }, [])
 
