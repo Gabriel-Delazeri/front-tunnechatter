@@ -2,17 +2,17 @@ import { useContext } from "react"
 import { AuthContext } from "../contexts/AuthContext"
 import { GetServerSideProps } from 'next'
 import { parseCookies } from "nookies"
-import Navbar from "../components/Navbar"
+import Layout from "../layouts"
 
 export default function Home() {
     const { user } = useContext(AuthContext)
 
     return (
-      <Navbar>
+      <Layout>
         <div className="text-gray-100">
-            {user?.username}
+            {/* {user?.username} */}
         </div>
-      </Navbar>
+      </Layout>
     )
 }
 
