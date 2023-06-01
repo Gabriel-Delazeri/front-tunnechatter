@@ -4,7 +4,7 @@ import React from 'react';
 import Slider from 'react-slick';
 import Head from "next/head";
 
-const CarouselComponent = () => {
+const CarouselAlbums = () => {
     
   const settings = {
     infinite: true,
@@ -42,4 +42,4 @@ const CarouselComponent = () => {
   );
 };
 
-export default CarouselComponent;
+export default CarouselAlbums;
