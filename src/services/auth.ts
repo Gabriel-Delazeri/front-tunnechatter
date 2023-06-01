@@ -6,11 +6,30 @@ type SignInRequestData = {
     "password": string;
 }
 
+type SignUpRequestData = {
+    username: string;
+    email: string;
+    first_name: string;
+    last_name: string;
+    password: string;
+}
+
 export async function signInRequest(data: SignInRequestData) {
     const response = await axios.post(
         'http://0.0.0.0:8080/auth/signin', data
     )
 
+    return {
+        "user" : response.data.user,
+        "token" : response.data.access_token
+    };
+}
+
+export async function signUpRequest(data: SignUpRequestData) {
+    const response = await axios.post(
+        'http://0.0.0.0:8080/auth/signup', data
+    )
+    
     return {
         "user" : response.data.user,
         "token" : response.data.access_token
