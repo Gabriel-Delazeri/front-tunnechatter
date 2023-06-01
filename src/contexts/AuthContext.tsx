@@ -2,13 +2,14 @@ import { createContext, useEffect, useState } from 'react'
 import { recoverUserInformation, signInRequest } from '../services/auth';
 import Router from 'next/router';
 
-import { setCookie, parseCookies } from 'nookies'
+import { setCookie, parseCookies, destroyCookie } from 'nookies'
 import { api } from '../services/api';
 
 type AuthContextType = {
     isAuthenticated : boolean;
     user: User;
     signIn: (data: SignInData) => Promise<void>
+    logout: () => void
 }
 
 type SignInData = {
@@ -58,8 +59,13 @@ export function AuthProvider({ children }) {
         Router.push('/')
     }
 
+    function logout() {
+        destroyCookie(null, 'tunechatter.token')
+        Router.reload()
+    }
+
     return (
-        <AuthContext.Provider value={{ user, isAuthenticated, signIn }}>
+        <AuthContext.Provider value={{ user, isAuthenticated, signIn, logout }}>
             {children}
         </AuthContext.Provider>
     )

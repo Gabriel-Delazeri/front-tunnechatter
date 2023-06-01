@@ -1,10 +1,12 @@
 /* eslint-disable @next/next/no-img-element */
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
+import { AuthContext } from '../../contexts/AuthContext';
 
 
 const Navbar = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { logout } = useContext(AuthContext)
 
   const handleDropdownToggle = () => {
     setDropdownOpen(!dropdownOpen);
@@ -12,6 +14,10 @@ const Navbar = () => {
 
   const handleMobileMenuToggle = () => {
     setMobileMenuOpen(!mobileMenuOpen);
+  };
+
+  const handleLogout = () => {
+    logout();
   };
 
   return (
@@ -64,6 +70,13 @@ const Navbar = () => {
                             className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                         >
                             Profile
+                        </a>
+                        <a
+                            href="#"
+                            onClick={handleLogout}
+                            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                            >
+                            Logout
                         </a>
                         </div>
                     )}
