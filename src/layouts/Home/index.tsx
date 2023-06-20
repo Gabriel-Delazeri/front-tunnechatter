@@ -10,12 +10,19 @@ import ShortReview from "../../components/ShortReview";
 export default function HomeLayout() {
   const { user } = useContext(AuthContext);
   const [albums, setAlbums] = useState([]);
+  const [popularReviews, setPopularReviews] = useState([]);
 
   useEffect(() => {
     api.get("/albums").then((response) => {
       setAlbums(response.data.content);
     });
   }, []);
+
+  useEffect(() => {
+    api.get("/reviews/popular").then((response) => {
+      setPopularReviews(response.data)
+    })
+  }, [])
 
   return (
     <div>
@@ -39,9 +46,9 @@ export default function HomeLayout() {
           </div>
           <hr />
         </div>
-        <ShortReview album={albums[1]}/>
-        <ShortReview album={albums[2]}/>
-        <ShortReview album={albums[14]}/>
+        <ShortReview review={popularReviews[0]}/>
+        <ShortReview review={popularReviews[1]}/>
+        <ShortReview review={popularReviews[2]}/>
       </div>
     </div>
   );

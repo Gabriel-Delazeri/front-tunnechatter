@@ -1,19 +1,10 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { Palette } from "react-palette";
+import { Album } from "../../types/album";
 
 interface Props {
   album: Album;
-}
-
-interface Album {
-  image_url: string;
-  name: string;
-  artists: Artist[];
-}
-
-interface Artist {
-  name: string;
 }
 
 export default function AlbumCard({ album }: Props) {
@@ -27,7 +18,6 @@ export default function AlbumCard({ album }: Props) {
     <div className="text-gray-200">
       <Palette src={album?.image_url}>
         {({ data, loading, error }) => {
-          console.log(data.vibrant);
           if (loading) {
             return <p>Loading...</p>;
           }
@@ -39,8 +29,6 @@ export default function AlbumCard({ album }: Props) {
           if (data && data.vibrant) {
             setDominantColor(data.muted);
           }
-
-          console.log(dominantColor);
 
           return (
             <>

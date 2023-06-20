@@ -1,15 +1,59 @@
 import Image from "next/image";
 import { Star, StarHalf } from "lucide-react";
+import { Review } from "../../types/review";
 
 interface Props {
-  album: any;
+  review: Review;
 }
 
-export default function ShortReview({ album }: Props) {
+export default function ShortReview({ review }: Props) {
+  function getAlbumReleaseYear(releaseDate: Date) {
+    return new Date(releaseDate).getFullYear();
+  }
+
+  const ratingStarsMap = {
+    0: 0,
+    0.5: 0.5,
+    1.0: 1,
+    1.5: 1.5,
+    2.0: 2,
+    2.5: 2.5,
+    3.0: 3,
+    3.5: 3.5,
+    4.0: 4,
+    4.5: 4.5,
+    5.0: 5,
+  };
+
+  function getReviewRatingStars(review: Review) {
+    const rating = review?.rating;
+
+    if (ratingStarsMap.hasOwnProperty(rating)) {
+      const starCount = ratingStarsMap[rating];
+
+      if (rating % 1 === 0.5) {
+        return (
+          <>
+            {Array.from({ length: starCount - 1 }).map((_, index) => (
+              <Star key={index} width={12} />
+            ))}
+            <StarHalf width={12} />
+          </>
+        );
+      }
+
+      return Array.from({ length: starCount }).map((_, index) => (
+        <Star key={index} width={12} />
+      ));
+    }
+
+    return null;
+  }
+
   return (
     <div className="flex flex-row mt-10">
       <Image
-        src={album?.image_url}
+        src={review?.album.image_url}
         width={144}
         height={144}
         alt="Picture of the author"
@@ -17,26 +61,25 @@ export default function ShortReview({ album }: Props) {
       />
       <div className="flex flex-col px-6 justify-center text-gray-200">
         <div className="flex flex-row space-x-2">
-          <div className="font-semibold">{album?.name}</div>
-          <div className="font-light">2019</div>
-        </div>
-        <div className="flex flex-row space-x-2 items-center">
-          <img
-            className="h-4 w-4 rounded-full"
-            src="https://avatars.githubusercontent.com/u/92875263?v=4"
-            alt="Logo do Usuário"
-          />
-          <div>Gabriel</div>
-          <div className=" flex">
-            <Star width={12} />
-            <Star width={12} />
-            <Star width={12} />
-            <StarHalf width={12} />
+          <div className="font-semibold">{review?.album.name}</div>
+          <div className="font-light">
+            {getAlbumReleaseYear(review?.album.release_date)}
           </div>
+        </div>
+        <div className="flex flex-row space-x-2 items-center mt-2">
+          <div className="flex">{getReviewRatingStars(review)}</div>
+          <Image
+            src={review?.user?.imageUrl}
+            width={144}
+            height={144}
+            alt="Picture of the author"
+            className="h-4 w-4 rounded-full"
+          />
+          <div>{review?.user?.username}</div>
         </div>
         <div className="flex-1 flex justify-center items-center h-32 w-72 overflow-hidden text-gray-200">
           <div className="text-center overflow-hidden text-ellipsis font-light italic">
-            Lorem ipsum Lorem ipsum Lorem ipsum
+            {review?.comment}
           </div>
         </div>
       </div>
