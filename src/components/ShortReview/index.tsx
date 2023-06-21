@@ -77,7 +77,7 @@ export default function ShortReview({ review }: Props) {
           />
           <div>{review?.user?.username}</div>
         </div>
-        <div className="flex-1 flex justify-center items-center h-32 w-72 overflow-hidden text-gray-200">
+        <div className="flex-1 flex justify-center items-center h-32 overflow-hidden text-gray-200">
           <div className="text-center overflow-hidden text-ellipsis font-light italic">
             {review?.comment}
           </div>
