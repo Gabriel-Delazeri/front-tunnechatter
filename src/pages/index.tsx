@@ -2,14 +2,13 @@ import { useContext } from "react"
 import { AuthContext } from "../contexts/AuthContext"
 import { GetServerSideProps } from 'next'
 import { parseCookies } from "nookies"
+import HomeLayout from "../layouts/Home"
 
 export default function Home() {
     const { user } = useContext(AuthContext)
 
     return (
-        <div className="text-gray-100">
-            {user?.username}
-        </div>
+      <HomeLayout/>
     )
 }
 
@@ -19,7 +18,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     if (!token) {
       return {
         redirect: {
-          destination: '/login',
+          destination: '/signin',
           permanent: false,
         }
       }
