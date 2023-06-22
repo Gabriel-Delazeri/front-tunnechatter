@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { Star, StarHalf } from "lucide-react";
+import { Star, StarHalf, ThumbsUp } from "lucide-react";
 import { Review } from "../../types/review";
 
 interface Props {
@@ -66,20 +66,28 @@ export default function ShortReview({ review }: Props) {
             {getAlbumReleaseYear(review?.album.release_date)}
           </div>
         </div>
-        <div className="flex flex-row space-x-2 items-center mt-2">
+        <div className="flex flex-row space-x-2 items-center mt-2 w-40 justify-between">
           <div className="flex">{getReviewRatingStars(review)}</div>
-          <Image
-            src={review?.user?.imageUrl}
-            width={144}
-            height={144}
-            alt="Picture of the author"
-            className="h-4 w-4 rounded-full"
-          />
-          <div>{review?.user?.username}</div>
+          <div className="flex space-x-1">
+            <Image
+              src={review?.user?.imageUrl}
+              width={144}
+              height={144}
+              alt="Picture of the author"
+              className="h-4 w-4 rounded-full"
+            />
+            <div>{review?.user?.username}</div>
+          </div>
         </div>
-        <div className="flex-1 flex justify-center items-center h-32 overflow-hidden text-gray-200">
+        <div className="flex-1 flex justify-start items-center h-32 overflow-hidden text-gray-200">
           <div className="text-center overflow-hidden text-ellipsis font-light italic">
             {review?.comment}
+          </div>
+        </div>
+        <div className="flex flex-row space-x-4">
+          <ThumbsUp width={12}/>
+          <div className="text-sm">
+            {review.likeCount} Likes
           </div>
         </div>
       </div>
