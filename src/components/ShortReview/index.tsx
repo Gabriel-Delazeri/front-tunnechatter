@@ -1,12 +1,16 @@
 import Image from "next/image";
 import { Star, StarHalf, ThumbsUp } from "lucide-react";
 import { Review } from "../../types/review";
+import { api } from "../../services/api";
+import { useState } from "react";
 
 interface Props {
   review: Review;
 }
 
 export default function ShortReview({ review }: Props) {
+  const [likesCount, setLikesCount] = useState(review.likeCount);
+
   function getAlbumReleaseYear(releaseDate: Date) {
     return new Date(releaseDate).getFullYear();
   }
@@ -50,6 +54,13 @@ export default function ShortReview({ review }: Props) {
     return null;
   }
 
+  function test(e: Event) {
+    e.preventDefault();
+  
+    api.post("/reviews/" + review.id + "/like").then((response) => {
+      setLikesCount(response.data.likeCount);
+    });
+  }
   return (
     <div className="flex flex-row mt-10">
       <Image
@@ -85,9 +96,11 @@ export default function ShortReview({ review }: Props) {
           </div>
         </div>
         <div className="flex flex-row space-x-4">
-          <ThumbsUp width={12}/>
+          <a href="#" onClick={test}>
+            <ThumbsUp width={12}/>
+          </a>
           <div className="text-sm">
-            {review.likeCount} Likes
+            {likesCount} Likes
           </div>
         </div>
       </div>
