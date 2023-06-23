@@ -2,13 +2,12 @@ import { useEffect, useState } from "react";
 import Layout from "../../layouts";
 import { api } from "../../services/api";
 import Image from "next/image";
-import { Star } from "lucide-react";
 import Link from "next/link";
 
 export default function AlbumsPage() {
   const [albums, setAlbums] = useState([]);
   const [filter, setFilter] = useState("");
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(0);
   const [albumsPerPage] = useState(20);
   const [totalAlbums, setTotalAlbums] = useState(0);
 
@@ -52,7 +51,7 @@ export default function AlbumsPage() {
           className="relative z-0 inline-flex rounded-md shadow-sm gap-2"
           aria-label="Pagination"
         >
-          {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+          {Array.from({ length: totalPages }, (_, i) => i).map((page) => (
             <Link
               key={page}
               href="#"
@@ -61,7 +60,7 @@ export default function AlbumsPage() {
                 currentPage === page ? "z-10 bg-indigo-500 text-white" : ""
               }`}
             >
-              {page}
+              {page + 1}
             </Link>
           ))}
         </nav>
@@ -75,7 +74,7 @@ export default function AlbumsPage() {
         <div className="flex mb-4 justify-end">
           <input
             type="text"
-            placeholder="Search for a album"
+            placeholder="Search for an album"
             value={filter}
             onChange={handleFilterChange}
             className="px-4 py-2 border border-gray-300 rounded-lg bg-transparent focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 text-gray-300"
