@@ -1,4 +1,5 @@
 import { Artist } from "./artist";
+import { Track } from "./track";
 
 export interface Album {
     id: string;
@@ -6,4 +7,5 @@ export interface Album {
     name: string;
     artists: Artist[];
     release_date: Date;
+    tracks: Track[]
 }

@@ -11,7 +11,7 @@ export default function HomeLayout() {
   const [popularReviews, setPopularReviews] = useState([]);
 
   useEffect(() => {
-    api.get("/albums/popular").then((response) => {
+    api.get("/albums/popular?size=4").then((response) => {
       setPopularAlbums(response.data.content);
     });
   }, []);
