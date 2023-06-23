@@ -1,4 +1,5 @@
 import { Artist } from "./artist";
+import { Review } from "./review";
 import { Track } from "./track";
 
 export interface Album {
@@ -7,5 +8,6 @@ export interface Album {
     name: string;
     artists: Artist[];
     release_date: Date;
-    tracks: Track[]
+    tracks: Track[];
+    userReview: Review
 }

@@ -55,9 +55,6 @@ export default function AlbumPage() {
                 <StarHalf fill="white" className="absolute"></StarHalf>
               </div>
             </div>
-            <div className="flex text-gray-300 flex-1 justify-center items-center">
-              You haven&apos;t reviewed this yet
-            </div>
           </div>
         </div>
         <div className="mt-10 text-gray-200">
