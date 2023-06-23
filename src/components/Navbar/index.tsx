@@ -1,6 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import React, { useContext, useState } from "react";
 import { AuthContext } from "../../contexts/AuthContext";
+import Link from "next/link";
 
 const Navbar = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -24,15 +25,15 @@ const Navbar = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center">
-              <div className="flex-shrink-0">
+              <Link href="/" className="flex-shrink-0">
                 <span className="text-indigo-300 text-3xl font-bold">Tune</span>
                 <span className="text-white text-3xl font-bold">Chatter</span>
-              </div>
+              </Link>
               <div className="hidden md:block">
                 <div className="ml-10 flex items-baseline space-x-4">
-                  <a className="text-white hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                  <Link href="/albums" className="text-white hover:text-white px-3 py-2 rounded-md text-sm font-medium">
                     ALBUMS
-                  </a>
+                  </Link>
                   <a className="text-white hover:text-white px-3 py-2 rounded-md text-sm font-medium">
                     LISTS
                   </a>

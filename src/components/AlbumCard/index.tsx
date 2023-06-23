@@ -2,6 +2,7 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { Palette } from "react-palette";
 import { Album } from "../../types/album";
+import Link from "next/link";
 
 interface Props {
   album: Album;
@@ -32,20 +33,22 @@ export default function AlbumCard({ album }: Props) {
 
           return (
             <>
-              <Image
-                src={album?.image_url}
-                width={288}
-                height={288}
-                alt="Picture of the author"
-              />
-              <div
-                className="bg-white justify-center flex rounded-sm  font-normal p-2"
-                style={{ backgroundColor: dominantColor }}
-              >
-                <div className="drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)]">
-                  {album?.name}
+              <Link href={"/albums/"+album.id}>
+                <Image
+                  src={album?.image_url}
+                  width={288}
+                  height={288}
+                  alt="Picture of the author"
+                />
+                <div
+                  className="bg-white justify-center flex rounded-sm  font-normal p-2"
+                  style={{ backgroundColor: dominantColor }}
+                >
+                  <div className="drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)]">
+                    {album?.name}
+                  </div>
                 </div>
-              </div>
+              </Link>
             </>
           );
         }}

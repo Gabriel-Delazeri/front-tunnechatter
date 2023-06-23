@@ -8,10 +8,9 @@ interface Props {
 export default function HomeAlbumPanel({ albums } : Props) {
     return (
         <div className="grid grid-cols-4 gap-6 mt-10">
-            <AlbumCard album={albums[5]} />
-            <AlbumCard album={albums[10]} />
-            <AlbumCard album={albums[12]} />
-            <AlbumCard album={albums[4]} />
+            {albums.map((album) => {
+                return <AlbumCard album={album} key={album.id}/>
+            })}
         </div>
     )
 }

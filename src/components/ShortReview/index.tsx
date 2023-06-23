@@ -1,15 +1,16 @@
 import Image from "next/image";
-import { Star, StarHalf } from "lucide-react";
+import { Star, StarHalf, ThumbsUp } from "lucide-react";
 import { Review } from "../../types/review";
+import { api } from "../../services/api";
+import { useState } from "react";
+import { getAlbumReleaseYear } from "../../services/album";
 
 interface Props {
   review: Review;
 }
 
 export default function ShortReview({ review }: Props) {
-  function getAlbumReleaseYear(releaseDate: Date) {
-    return new Date(releaseDate).getFullYear();
-  }
+  const [likesCount, setLikesCount] = useState(review.likeCount);
 
   const ratingStarsMap = {
     0: 0,
@@ -50,6 +51,14 @@ export default function ShortReview({ review }: Props) {
     return null;
   }
 
+  function likeUnlike(e: Event) {
+    e.preventDefault();
+  
+    api.post("/reviews/" + review.id + "/like").then((response) => {
+      setLikesCount(response.data.likeCount);
+    });
+  }
+
   return (
     <div className="flex flex-row mt-10">
       <Image
@@ -66,20 +75,30 @@ export default function ShortReview({ review }: Props) {
             {getAlbumReleaseYear(review?.album.release_date)}
           </div>
         </div>
-        <div className="flex flex-row space-x-2 items-center mt-2">
+        <div className="flex flex-row space-x-2 items-center mt-2 w-40 justify-between">
           <div className="flex">{getReviewRatingStars(review)}</div>
-          <Image
-            src={review?.user?.imageUrl}
-            width={144}
-            height={144}
-            alt="Picture of the author"
-            className="h-4 w-4 rounded-full"
-          />
-          <div>{review?.user?.username}</div>
+          <div className="flex space-x-1">
+            <Image
+              src={review?.user?.imageUrl}
+              width={144}
+              height={144}
+              alt="Picture of the author"
+              className="h-4 w-4 rounded-full"
+            />
+            <div>{review?.user?.username}</div>
+          </div>
         </div>
-        <div className="flex-1 flex justify-center items-center h-32 overflow-hidden text-gray-200">
+        <div className="flex-1 flex justify-start items-center h-32 overflow-hidden text-gray-200">
           <div className="text-center overflow-hidden text-ellipsis font-light italic">
             {review?.comment}
+          </div>
+        </div>
+        <div className="flex flex-row space-x-4">
+          <a href="#" onClick={likeUnlike}>
+            <ThumbsUp width={12}/>
+          </a>
+          <div className="text-sm">
+            {likesCount} Likes
           </div>
         </div>
       </div>
