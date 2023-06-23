@@ -8,20 +8,65 @@ import Link from "next/link";
 export default function AlbumsPage() {
   const [albums, setAlbums] = useState([]);
   const [filter, setFilter] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [albumsPerPage] = useState(20);
+  const [totalAlbums, setTotalAlbums] = useState(0);
 
   useEffect(() => {
-    api.get("/albums").then((response) => {
+    const fetchAlbums = async () => {
+      const response = await api.get("/albums", {
+        params: {
+          page: currentPage,
+          size: albumsPerPage,
+        },
+      });
       setAlbums(response.data.content);
-    });
-  }, []);
+      setTotalAlbums(response.data.totalElements);
+    };
+
+    fetchAlbums();
+  }, [currentPage, albumsPerPage]);
 
   const filteredAlbums = albums.filter((album) =>
     album.name.toLowerCase().includes(filter.toLowerCase())
   );
 
   const handleFilterChange = (event) => {
-    console.log(event.target.value)
     setFilter(event.target.value);
+  };
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
+
+  const renderPagination = () => {
+    const totalPages = Math.ceil(totalAlbums / albumsPerPage);
+
+    if (totalPages <= 1) {
+      return null;
+    }
+
+    return (
+      <div className="flex justify-center mt-6">
+        <nav
+          className="relative z-0 inline-flex rounded-md shadow-sm gap-2"
+          aria-label="Pagination"
+        >
+          {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+            <Link
+              key={page}
+              href="#"
+              onClick={() => handlePageChange(page)}
+              className={`bg-transparent text-gray-500 hover:bg-indigo-500 relative inline-flex items-center px-4 py-2 border border-gray-300 rounded-sm text-sm font-medium focus:outline-none ${
+                currentPage === page ? "z-10 bg-indigo-500 text-white" : ""
+              }`}
+            >
+              {page}
+            </Link>
+          ))}
+        </nav>
+      </div>
+    );
   };
 
   return (
@@ -30,30 +75,29 @@ export default function AlbumsPage() {
         <div className="flex mb-4 justify-end">
           <input
             type="text"
-            placeholder="Filtrar álbuns"
+            placeholder="Search for a album"
             value={filter}
             onChange={handleFilterChange}
-            className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 text-indigo-500"
+            className="px-4 py-2 border border-gray-300 rounded-lg bg-transparent focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 text-gray-300"
           />
         </div>
         <div className="grid grid-cols-5 gap-6">
-          {filteredAlbums.map((album) => {
-            return (
-              <Link
-                href={"/albums/" + album.id}
-                key={album.id}
-                className="flex-col hover:border-2 border-indigo-400"
-              >
-                <Image
-                  src={album?.image_url}
-                  width={288}
-                  height={288}
-                  alt="Picture of the author"
-                />
-              </Link>
-            );
-          })}
+          {filteredAlbums.map((album) => (
+            <Link
+              href={"/albums/" + album.id}
+              key={album.id}
+              className="flex-col hover:border-2 border-indigo-400"
+            >
+              <Image
+                src={album?.image_url}
+                width={288}
+                height={288}
+                alt="Picture of the author"
+              />
+            </Link>
+          ))}
         </div>
+        {renderPagination()}
       </div>
     </Layout>
   );
