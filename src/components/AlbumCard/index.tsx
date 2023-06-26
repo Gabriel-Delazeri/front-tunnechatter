@@ -33,22 +33,24 @@ export default function AlbumCard({ album }: Props) {
 
           return (
             <>
-              <Link href={"/albums/"+album.id}>
-                <Image
-                  src={album?.image_url}
-                  width={288}
-                  height={288}
-                  alt="Picture of the author"
-                />
-                <div
-                  className="bg-white justify-center flex rounded-sm  font-normal p-2"
-                  style={{ backgroundColor: dominantColor }}
-                >
-                  <div className="drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)]">
-                    {album?.name}
+              <div className="hover:border-2 border-gray-300">
+                <Link href={"/albums/" + album.id}>
+                  <Image
+                    src={album?.image_url}
+                    width={288}
+                    height={288}
+                    alt="Picture of the author"
+                  />
+                  <div
+                    className="bg-white justify-center flex rounded-sm  font-normal p-2"
+                    style={{ backgroundColor: dominantColor }}
+                  >
+                    <div className="drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)]">
+                      {album?.name}
+                    </div>
                   </div>
-                </div>
-              </Link>
+                </Link>
+              </div>
             </>
           );
         }}
