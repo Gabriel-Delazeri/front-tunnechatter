@@ -82,7 +82,7 @@ export default function ShortReview({ review }: Props) {
           <div className="flex">{getReviewRatingStars(review)}</div>
           <div className="flex space-x-1">
             <Image
-              src={review?.user?.imageUrl}
+              src={review?.user?.imageUrl ? review.user.imageUrl : ''}
               width={144}
               height={144}
               alt="Picture of the author"

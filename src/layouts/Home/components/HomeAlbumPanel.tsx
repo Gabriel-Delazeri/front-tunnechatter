@@ -8,7 +8,7 @@ interface Props {
 export default function HomeAlbumPanel({ albums } : Props) {
     return (
         <div className="grid grid-cols-4 gap-6 mt-10">
-            {albums.map((album) => {
+            {albums.map((album?) => {
                 return <AlbumCard album={album} key={album.id}/>
             })}
         </div>

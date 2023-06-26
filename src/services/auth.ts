@@ -16,7 +16,7 @@ type SignUpRequestData = {
 
 export async function signInRequest(data: SignInRequestData) {
     const response = await axios.post(
-        'http://ec2-3-137-221-225.us-east-2.compute.amazonaws.com:8080/auth/signin', data
+        'http://0.0.0.0:8080/auth/signin', data
     )
 
     return {
@@ -27,7 +27,7 @@ export async function signInRequest(data: SignInRequestData) {
 
 export async function signUpRequest(data: SignUpRequestData) {
     const response = await axios.post(
-        'http://ec2-3-137-221-225.us-east-2.compute.amazonaws.com:8080/auth/signup', data
+        'http://0.0.0.0:8080/auth/signup', data
     )
     
     return {
