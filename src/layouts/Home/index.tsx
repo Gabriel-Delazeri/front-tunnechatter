@@ -26,7 +26,6 @@ export default function HomeLayout() {
 
   return (
     <Layout>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex-shrink-0">
           <div className="py-6 font-normal text-xl justify-center text-white drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)]">
             Most popular last 30 days
@@ -43,7 +42,6 @@ export default function HomeLayout() {
         {popularReviews.map((review) => {
           return <ShortReview review={review} key={review.id}/>;
         })}
-      </div>
     </Layout>
   );
 }
