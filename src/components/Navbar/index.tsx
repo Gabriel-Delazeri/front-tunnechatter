@@ -34,12 +34,9 @@ const Navbar = () => {
                   <Link href="/albums" className="text-white hover:text-white px-3 py-2 rounded-md text-sm font-medium">
                     ALBUMS
                   </Link>
-                  <a className="text-white hover:text-white px-3 py-2 rounded-md text-sm font-medium">
-                    LISTS
-                  </a>
-                  <a className="text-white hover:text-white px-3 py-2 rounded-md text-sm font-medium">
-                    MEMBERS
-                  </a>
+                  <Link href={"/reviews"} className="text-white hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                    REVIEWS
+                  </Link>
                 </div>
               </div>
             </div>
@@ -120,10 +117,7 @@ const Navbar = () => {
                   ALBUMS
                 </a>
                 <a className="text-white hover:text-white block px-3 py-2 rounded-md text-base font-medium">
-                  LISTS
-                </a>
-                <a className="text-white hover:text-white block px-3 py-2 rounded-md text-base font-medium">
-                  MEMBERS
+                  REVIEWS
                 </a>
               </div>
             </div>

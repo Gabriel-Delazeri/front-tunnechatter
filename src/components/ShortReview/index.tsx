@@ -4,6 +4,7 @@ import { Review } from "../../types/review";
 import { api } from "../../services/api";
 import { useState } from "react";
 import { getAlbumReleaseYear } from "../../services/album";
+import Link from "next/link";
 
 interface Props {
   review: Review;
@@ -53,7 +54,7 @@ export default function ShortReview({ review }: Props) {
 
   function likeUnlike(e: Event) {
     e.preventDefault();
-  
+
     api.post("/reviews/" + review.id + "/like").then((response) => {
       setLikesCount(response.data.likeCount);
     });
@@ -61,25 +62,27 @@ export default function ShortReview({ review }: Props) {
 
   return (
     <div className="flex flex-row mt-10">
-      <Image
-        src={review?.album.image_url}
-        width={144}
-        height={144}
-        alt="Picture of the author"
-        className="flex-shrink-0"
-      />
+      <Link href={"/albums/"+review.album.id}>
+        <Image
+          src={review?.album.image_url}
+          width={144}
+          height={144}
+          alt="Picture of the author"
+          className="flex-shrink-0"
+        />
+      </Link>
       <div className="flex flex-col px-6 justify-center text-gray-200">
-        <div className="flex flex-row space-x-2">
+        <Link href={"/albums/"+review.album.id} className="flex flex-row space-x-2">
           <div className="font-semibold">{review?.album.name}</div>
           <div className="font-light">
             {getAlbumReleaseYear(review?.album.release_date)}
           </div>
-        </div>
+        </Link>
         <div className="flex flex-row space-x-2 items-center mt-2 w-40 justify-between">
           <div className="flex">{getReviewRatingStars(review)}</div>
           <div className="flex space-x-1">
             <Image
-              src={review?.user?.imageUrl}
+              src={review?.user?.imageUrl ? review.user.imageUrl : ''}
               width={144}
               height={144}
               alt="Picture of the author"
@@ -95,11 +98,9 @@ export default function ShortReview({ review }: Props) {
         </div>
         <div className="flex flex-row space-x-4">
           <a href="#" onClick={likeUnlike}>
-            <ThumbsUp width={12}/>
+            <ThumbsUp width={12} />
           </a>
-          <div className="text-sm">
-            {likesCount} Likes
-          </div>
+          <div className="text-sm">{likesCount} Likes</div>
         </div>
       </div>
     </div>
