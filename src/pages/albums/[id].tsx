@@ -8,6 +8,7 @@ import { getAlbumReleaseYear } from "../../services/album";
 import ArtistUtil from "../../utils/ArtistUtil";
 import TrackUtil from "../../utils/TrackUtil";
 import { Clock1, Star, StarHalf } from "lucide-react";
+import UserReviewCard from "./components/UserReviewCard";
 
 export default function AlbumPage() {
   const router = useRouter();
@@ -34,7 +35,8 @@ export default function AlbumPage() {
             className="flex-shrink-0"
           />
         </div>
-        <div className="flex flex-col text-gray-200 gap-2">
+        <div className="flex flex-col text-gray-200 gap-2 flex-1">
+          <div className="flex flex-row"></div>
           <div className="text-2xl font-medium">{album?.name}</div>
           <div className="text-xl font-light">
             by {album?.artists[0].name} (
@@ -50,6 +52,7 @@ export default function AlbumPage() {
               <StarHalf fill="white" className="absolute"></StarHalf>
             </div>
           </div>
+          <UserReviewCard album={album}/>
         </div>
       </div>
       <div className="mt-10 text-gray-200">
