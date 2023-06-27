@@ -37,15 +37,15 @@ export default function ShortReview({ review }: Props) {
         return (
           <>
             {Array.from({ length: starCount - 1 }).map((_, index) => (
-              <Star key={index} width={12} />
+              <Star key={index} width={12} scale={12} fill="white" />
             ))}
-            <StarHalf width={12} />
+            <StarHalf width={12} fill="white" />
           </>
         );
       }
 
       return Array.from({ length: starCount }).map((_, index) => (
-        <Star key={index} width={12} />
+        <Star key={index} width={12} fill="white" />
       ));
     }
 
@@ -61,46 +61,63 @@ export default function ShortReview({ review }: Props) {
   }
 
   return (
-    <div className="flex flex-row mt-10">
-      <Link href={"/albums/"+review.album.id}>
-        <Image
-          src={review?.album.image_url}
-          width={144}
-          height={144}
-          alt="Picture of the author"
-          className="flex-shrink-0"
-        />
-      </Link>
-      <div className="flex flex-col px-6 justify-center text-gray-200">
-        <Link href={"/albums/"+review.album.id} className="flex flex-row space-x-2">
-          <div className="font-semibold">{review?.album.name}</div>
-          <div className="font-light">
-            {getAlbumReleaseYear(review?.album.release_date)}
+    <div className="flex flex-row gap-2 text-gray-200 text-sm sm:text-xl bg-zinc-900 p-2 sm:p-4 rounded-md">
+      <Image
+        src={review?.album.image_url}
+        width={144}
+        height={144}
+        alt="Picture of the author"
+        className="flex-shrink-0 w-24 h-24 sm:w-40 sm:h-40"
+      />
+      <div className="flex flex-col flex-1 px-2 overflow-hidden">
+        <div className="flex flex-row space-x-1 line-clamp-1">
+          <div
+            className="font-semibold"
+            style={{
+              display: "-webkit-box",
+              WebkitLineClamp: "1",
+              WebkitBoxOrient: "vertical",
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+            }}
+          >
+            {review?.album.name}
           </div>
-        </Link>
-        <div className="flex flex-row space-x-2 items-center mt-2 w-40 justify-between">
+        </div>
+        <div className="flex flex-row space-x-2 items-center justify-between">
           <div className="flex">{getReviewRatingStars(review)}</div>
           <div className="flex space-x-1">
             <Image
-              src={review?.user?.imageUrl ? review.user.imageUrl : ''}
+              src={review?.user?.imageUrl ? review.user.imageUrl : ""}
               width={144}
               height={144}
               alt="Picture of the author"
-              className="h-4 w-4 rounded-full"
+              className="h-3 w-3 sm:h-6 sm:w-6 rounded-full"
             />
-            <div>{review?.user?.username}</div>
+            <div className="text-xs sm:text-lg font-normal">
+              {review?.user?.username}
+            </div>
           </div>
         </div>
-        <div className="flex-1 flex justify-start items-center h-32 overflow-hidden text-gray-200">
-          <div className="text-center overflow-hidden text-ellipsis font-light italic">
+        <div className="flex flex-row flex-1 mb-2 overflow-hidden italic text-gray-400 sm:justify-center sm:items-center">
+          <div
+            className="line-clamp-1 flex-1"
+            style={{
+              display: "-webkit-box",
+              WebkitLineClamp: "1",
+              WebkitBoxOrient: "vertical",
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+            }}
+          >
             {review?.comment}
           </div>
         </div>
-        <div className="flex flex-row space-x-4">
+        <div className="flex flex-row space-x-2 justify-end items-center text-xs">
           <a href="#" onClick={likeUnlike}>
-            <ThumbsUp width={12} />
+            <ThumbsUp className="w-3 h-3 sm:w-5 sm:h-5" />
           </a>
-          <div className="text-sm">{likesCount} Likes</div>
+          <div className="text-sm sm:text-lg">{likesCount}</div>
         </div>
       </div>
     </div>
