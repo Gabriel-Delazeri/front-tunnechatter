@@ -13,8 +13,8 @@ export default function AlbumCard({ album }: Props) {
         <Link href={"/albums/" + album.id}>
           <Image
             src={album?.image_url}
-            width={288}
-            height={288}
+            width={300}
+            height={300}
             alt="Picture of the author"
           />
         </Link>

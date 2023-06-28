@@ -1,5 +1,6 @@
 import { ReactNode } from "react";
 import Navbar from "../components/Navbar";
+import Image from "next/image";
 
 interface LayoutProps {
   children: ReactNode;
