@@ -70,16 +70,16 @@ export default function AlbumsPage() {
 
   return (
     <Layout>
-      <div className="flex mb-4 justify-end">
+      <div className="flex mb-4 sm:justify-end justify-center">
         <input
           type="text"
-          placeholder="Search for an album"
+          placeholder="Search for a album"
           value={filter}
           onChange={handleFilterChange}
           className="px-4 py-2 border border-gray-300 rounded-lg bg-transparent focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 text-gray-300"
         />
       </div>
-      <div className="grid grid-cols-5 gap-6">
+      <div className="grid grid-cols-2 sm:grid-cols-5 gap-6">
         {filteredAlbums.map((album) => (
           <Link
             href={"/albums/" + album.id}
