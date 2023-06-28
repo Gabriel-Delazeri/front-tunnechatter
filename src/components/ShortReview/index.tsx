@@ -99,7 +99,7 @@ export default function ShortReview({ review }: Props) {
             </div>
           </div>
         </div>
-        <div className="flex flex-row flex-1 mb-2 overflow-hidden italic text-gray-400 sm:justify-center sm:items-center">
+        <div className="flex flex-row flex-1 mb-2 overflow-hidden italic font-serif text-gray-400 sm:justify-center sm:items-center">
           <div
             className="line-clamp-1 flex-1"
             style={{
