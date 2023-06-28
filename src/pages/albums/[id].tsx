@@ -36,14 +36,25 @@ export default function AlbumPage() {
             className="flex-shrink-0 sm:w-80"
           />
           <div className="sm:flex-col sm:space-y-2 p-2">
-            <div className="flex flex-row mt-3 text-lg sm:text-2xl font-medium">
-              {album?.name}
+            <div className="flex flex-row mt-3 text-lg sm:text-2xl font-medium justify-center sm:justify-start">
+              <div
+                className="line-clamp-1 flex-1"
+                style={{
+                  display: "-webkit-box",
+                  WebkitLineClamp: "1",
+                  WebkitBoxOrient: "vertical",
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                }}
+              >
+                {album?.name}
+              </div>
             </div>
-            <div className="flex flex-row text-base font-light sm:text-xl">
+            <div className="flex flex-row text-base font-light sm:text-xl justify-center sm:justify-start">
               {album?.artists[0].name} (
               {getAlbumReleaseYear(album?.release_date)})
             </div>
-            <div className="flex flex-row items-start">
+            <div className="flex flex-row justify-center sm:justify-start">
               <Star fill="white" className="w-4 sm:w-6"></Star>
               <Star fill="white" className="w-4 sm:w-6"></Star>
               <Star fill="white" className="w-4 sm:w-6"></Star>
