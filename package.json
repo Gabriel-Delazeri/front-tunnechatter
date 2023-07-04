@@ -20,7 +20,8 @@
     "react-palette": "^1.0.2",
     "react-responsive-carousel": "^3.2.23",
     "react-router-dom": "^6.11.2",
-    "react-slick": "^0.29.0"
+    "react-slick": "^0.29.0",
+    "react-stars": "^2.2.5"
   },
   "devDependencies": {
     "@types/node": "20.2.5",

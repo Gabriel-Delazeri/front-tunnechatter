@@ -5,25 +5,32 @@ import { api } from "../../services/api";
 import Image from "next/image";
 import { Album } from "../../types/album";
 import { getAlbumReleaseYear } from "../../services/album";
-import ArtistUtil from "../../utils/ArtistUtil";
-import TrackUtil from "../../utils/TrackUtil";
-import { Clock1, Star, StarHalf } from "lucide-react";
-import UserReviewCard from "./components/UserReviewCard";
-import Link from "next/link";
+import { Star, StarHalf } from "lucide-react";
+import AlbumMenu from "./components/AlbumMenu";
+import { Review } from "../../types/review";
 
 export default function AlbumPage() {
   const router = useRouter();
   const { id } = router.query;
   const [album, setAlbum] = useState<Album | null>(null);
+  const [reviews, setReviews] = useState<Review[] | null>(null);
 
   useEffect(() => {
-    api.get("/albums/by-id/" + id).then((response) => {
+    api.get(`/albums/by-id/${id}`).then((response) => {
       setAlbum(response.data);
     });
   }, [id]);
 
-  album?.tracks.sort((a, b) => a.number - b.number);
+  useEffect(() => {
+    api.get(`/reviews/by-album/${id}`)
+      .then((response) => {
+        const filteredReviews = response.data.filter(review => review.user.id !== album?.userReview?.user.id);
+        const sortedReviews = filteredReviews.sort((a, b) => a.createdAt - b.createdAt);
+        setReviews(sortedReviews);
+      });
+  }, [id, album]);
 
+  album?.tracks.sort((a, b) => a.number - b.number);
   return (
     <Layout>
       <div className="flex flex-row justify-center sm:justify-normal">
@@ -71,52 +78,7 @@ export default function AlbumPage() {
         </div>
       </div>
       <div className="mt-10 text-gray-200">
-        <div className="flex space-x-2 p-2 font-medium">
-          <div className="text-sm bg-gray-200 text-zinc-900 p-3 rounded-xl">
-            Tracks
-          </div>
-          <div className="text-sm bg-zinc-900 p-3 rounded-xl">Reviews</div>
-        </div>
-        <div className="relative overflow-x-auto">
-          <table className="text-sm text-left mt-4 w-full">
-            <thead className="text-xs uppercase">
-              <tr>
-                <th scope="col">#</th>
-                <th scope="col" className="px-6 py-2">
-                  Name
-                </th>
-                <th scope="col" className="px-6 py-2">
-                  <div className="flex flex-row justify-end">
-                    <Clock1 width={14} />
-                  </div>
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {album?.tracks.map((track) => {
-                return (
-                  <tr key={track.id}>
-                    <td>{track.number}</td>
-                    <td
-                      scope="row"
-                      className="px-6 py-2 font-medium whitespace-nowrap flex-1"
-                    >
-                      <div className="flex flex-row">{track.name}</div>
-                      <div className="flex flex-row font-light">
-                        {ArtistUtil.getArtistsName(track.artists)}
-                      </div>
-                    </td>
-                    <td className="px-6 py-2">
-                      <div className="flex flex-row justify-end">
-                        {TrackUtil.getMinutage(track.duration_ms)}
-                      </div>
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        </div>
+          <AlbumMenu album={album} reviews={reviews}/>
       </div>
     </Layout>
   );

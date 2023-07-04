@@ -1,10 +1,9 @@
 import Image from "next/image";
-import { Star, StarHalf, ThumbsUp } from "lucide-react";
+import { ThumbsUp } from "lucide-react";
 import { Review } from "../../types/review";
 import { api } from "../../services/api";
 import { useState } from "react";
-import { getAlbumReleaseYear } from "../../services/album";
-import Link from "next/link";
+import ReviewUtil from "../../utils/ReviewUtil";
 
 interface Props {
   review: Review;
@@ -12,45 +11,6 @@ interface Props {
 
 export default function ShortReview({ review }: Props) {
   const [likesCount, setLikesCount] = useState(review.likeCount);
-
-  const ratingStarsMap = {
-    0: 0,
-    0.5: 0.5,
-    1.0: 1,
-    1.5: 1.5,
-    2.0: 2,
-    2.5: 2.5,
-    3.0: 3,
-    3.5: 3.5,
-    4.0: 4,
-    4.5: 4.5,
-    5.0: 5,
-  };
-
-  function getReviewRatingStars(review: Review) {
-    const rating = review?.rating;
-
-    if (ratingStarsMap.hasOwnProperty(rating)) {
-      const starCount = ratingStarsMap[rating];
-
-      if (rating % 1 === 0.5) {
-        return (
-          <>
-            {Array.from({ length: starCount - 1 }).map((_, index) => (
-              <Star key={index} width={12} scale={12} fill="white" />
-            ))}
-            <StarHalf width={12} fill="white" />
-          </>
-        );
-      }
-
-      return Array.from({ length: starCount }).map((_, index) => (
-        <Star key={index} width={12} fill="white" />
-      ));
-    }
-
-    return null;
-  }
 
   function likeUnlike(e: Event) {
     e.preventDefault();
@@ -85,7 +45,7 @@ export default function ShortReview({ review }: Props) {
           </div>
         </div>
         <div className="flex flex-row space-x-2 items-center justify-between">
-          <div className="flex">{getReviewRatingStars(review)}</div>
+          <div className="flex">{(ReviewUtil.getReviewRatingStars(review))}</div>
           <div className="flex space-x-1">
             <Image
               src={review?.user?.imageUrl ? review.user.imageUrl : ""}
