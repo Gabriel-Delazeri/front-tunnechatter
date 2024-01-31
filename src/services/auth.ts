@@ -16,23 +16,23 @@ type SignUpRequestData = {
 
 export async function signInRequest(data: SignInRequestData) {
     const response = await axios.post(
-        'http://0.0.0.0:8080/auth/signin', data
+        'http://localhost:8080/api/auth/login', data
     )
 
     return {
         "user" : response.data.user,
-        "token" : response.data.access_token
+        "token" : response.data.token
     };
 }
 
 export async function signUpRequest(data: SignUpRequestData) {
     const response = await axios.post(
-        'http://0.0.0.0:8080/auth/signup', data
+        'http://localhost:8080/api/auth/register', data
     )
     
     return {
         "user" : response.data.user,
-        "token" : response.data.access_token
+        "token" : response.data.token
     };
 }
 
